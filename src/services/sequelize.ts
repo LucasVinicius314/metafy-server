@@ -15,6 +15,12 @@ const sequelize = new Sequelize(`mysql://${host}:${port}/${db}`, {
   password: password,
 })
 
-const Models = {}
+const User = sequelize.define('user', {
+  email: DataTypes.STRING,
+  password: DataTypes.STRING,
+  username: DataTypes.STRING,
+})
+
+const Models = { User }
 
 export { sequelize, Models }

@@ -5,6 +5,7 @@ import * as express from 'express'
 import { Models, sequelize } from './services/sequelize'
 
 import { json } from 'body-parser'
+import { router } from './routes'
 
 dotenv.config()
 
@@ -23,7 +24,7 @@ const setup = async () => {
 
   app.use(cors())
   app.use(json())
-  // app.use(router)
+  app.use('/api/', router)
 
   app.listen(process.env.PORT, () => {
     console.log(`Listening on port ${process.env.PORT}`)
