@@ -2,7 +2,7 @@ import { Router } from 'express'
 
 const router = Router()
 
-router.post('/user/login', (req, res) => {
+router.post('/user/test', (req, res) => {
   res.json({ message: 'test' })
 })
 

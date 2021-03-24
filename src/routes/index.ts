@@ -1,16 +1,22 @@
 import { Router } from 'express'
-import { useValidation } from '../middleware/jwt'
+import { authRouter } from './auth'
+import { errorHandler } from '../middleware/error'
 import { userRouter } from './user'
+import { validationHandler } from '../middleware/jwt'
 
 const router = Router()
 
 // open routes
 
-// router.use()
+router.use(authRouter)
 
 // protected routes
 
-router.use(useValidation)
+router.use(validationHandler)
+
+// error
+
+router.use(errorHandler)
 
 router.use(userRouter)
 
