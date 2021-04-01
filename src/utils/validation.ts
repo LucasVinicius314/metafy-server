@@ -16,10 +16,20 @@ type Types = 'string' | 'number'
 const matches: Matches = (value, type, message, options) => {
   options = options || {}
   options.email = options.email || false
-  options.maxLength = options.maxLength || Infinity
-  options.minLength = options.minLength || 0
+  options.maxLength = options.maxLength || 20
+  options.minLength = options.minLength || 4
 
   if (typeof value === type) {
+    if (type === 'string') {
+      if ((value as string).length < options.minLength) {
+        throw message
+      }
+      if ((value as string).length > options.maxLength) {
+        throw message
+      }
+    } else {
+      throw message
+    }
   } else {
     throw message
   }

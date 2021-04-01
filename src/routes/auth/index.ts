@@ -38,11 +38,12 @@ router.post('/user/register', async (req, res, next) => {
   const username = req.body.username
 
   try {
+    matches(username, 'string', 'Invalid username')
     matches(email, 'string', 'Invalid email')
     matches(password, 'string', 'Invalid password')
-    matches(username, 'string', 'Invalid username')
   } catch (error) {
-    next(new HttpException(400, error))
+    console.log('catch')
+    return void next(new HttpException(400, error))
   }
 
   try {
