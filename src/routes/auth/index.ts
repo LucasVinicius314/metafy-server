@@ -56,7 +56,13 @@ router.post('/user/register', async (req, res, next) => {
 
     res.setHeader('authorization', sign(user.get()))
 
-    res.json(new Success('User created'))
+    res.json({
+      createdAt: user.getDataValue('createdAt'),
+      email: user.getDataValue('email'),
+      id: user.getDataValue('id'),
+      updatedAt: user.getDataValue('updatedAt'),
+      username: user.getDataValue('username'),
+    })
   } catch (error) {
     next(new HttpException(400, 'Invalid data'))
   }
