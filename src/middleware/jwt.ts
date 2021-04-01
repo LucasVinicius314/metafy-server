@@ -2,6 +2,7 @@ import * as dotenv from 'dotenv'
 import * as jwt from 'jsonwebtoken'
 
 import { HttpException } from '../exceptions/httpexception'
+import { Models } from '../typescript'
 import { RequestHandler } from 'express'
 
 dotenv.config()
@@ -18,4 +19,8 @@ const validationHandler: RequestHandler = (req, res, next) => {
   }
 }
 
-export { validationHandler }
+const sign = (user: Models.User) => {
+  return jwt.sign(user, process.env.SECRET)
+}
+
+export { validationHandler, sign }

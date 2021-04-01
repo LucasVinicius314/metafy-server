@@ -1,10 +1,12 @@
+import { Model, Op } from 'sequelize'
 import { Models, sequelize } from '../../services/sequelize'
 
 import { HttpException } from '../../exceptions/httpexception'
-import { Op } from 'sequelize'
 import { Router } from 'express'
 import { Success } from '../../responses/success'
+import { Models as _Models } from '../../typescript'
 import { matches } from '../../utils/validation'
+import { sign } from '../../middleware/jwt'
 
 const router = Router()
 
@@ -42,16 +44,17 @@ router.post('/user/register', async (req, res, next) => {
     matches(email, 'string', 'Invalid email')
     matches(password, 'string', 'Invalid password')
   } catch (error) {
-    console.log('catch')
     return void next(new HttpException(400, error))
   }
 
   try {
-    await Models.User.create({
+    const user = await Models.User.create<Model<_Models.User, {}>>({
       email,
       password,
       username,
     })
+
+    res.setHeader('authorization', sign(user.get()))
 
     res.json(new Success('User created'))
   } catch (error) {
