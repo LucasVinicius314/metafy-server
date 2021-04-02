@@ -10,8 +10,7 @@ dotenv.config()
 const validationHandler: RequestHandler = (req, res, next) => {
   try {
     const token = req.headers.authorization
-    const decoded = jwt.verify(token, process.env.SECRET)
-    // @ts-ignore
+    const decoded = jwt.verify(token, process.env.SECRET) as Models.User
     req.user = decoded
     next()
   } catch (error) {

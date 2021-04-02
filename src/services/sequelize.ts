@@ -21,6 +21,21 @@ const User = sequelize.define('user', {
   username: DataTypes.STRING,
 })
 
-const Models = { User }
+const Post = sequelize.define('post', {
+  content: DataTypes.TEXT,
+  userId: DataTypes.INTEGER,
+  // userId: {
+  //   type: DataTypes.INTEGER,
+  //   references: {
+  //     model: User,
+  //     key: 'id',
+  //   },
+  // },
+})
+
+User.hasMany(Post, { foreignKey: 'userId' })
+Post.belongsTo(User, { foreignKey: 'userId' })
+
+const Models = { User, Post }
 
 export { sequelize, Models }

@@ -10,7 +10,7 @@ import { sign } from '../../middleware/jwt'
 
 const router = Router()
 
-router.post('/user/login', async (req, res, next) => {
+router.post('/login', async (req, res, next) => {
   const email = req.body.email
   const password = req.body.password
 
@@ -42,7 +42,7 @@ router.post('/user/login', async (req, res, next) => {
   }
 })
 
-router.post('/user/register', async (req, res, next) => {
+router.post('/register', async (req, res, next) => {
   const email = req.body.email
   const password = req.body.password
   const username = req.body.username

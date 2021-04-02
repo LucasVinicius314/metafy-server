@@ -16,7 +16,7 @@ const setup = async () => {
     .catch(console.log)
 
   await sequelize
-    .sync({ alter: true, force: true })
+    .sync({ alter: true, force: false })
     .then(() => console.log('Database sync ok'))
     .catch(console.log)
 
