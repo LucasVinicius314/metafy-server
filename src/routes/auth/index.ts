@@ -25,7 +25,15 @@ router.post('/user/login', async (req, res, next) => {
     })
 
     if (user) {
-      res.json(new Success('User found'))
+      res.setHeader('authorization', sign(user.get()))
+
+      res.json({
+        createdAt: user.getDataValue('createdAt'),
+        email: user.getDataValue('email'),
+        id: user.getDataValue('id'),
+        updatedAt: user.getDataValue('updatedAt'),
+        username: user.getDataValue('username'),
+      })
     } else {
       next(new HttpException(400, 'User not found'))
     }
