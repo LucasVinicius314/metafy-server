@@ -29,4 +29,74 @@ router.post('/send', async (req, res, next) => {
   }
 })
 
+router.post('/pending', async (req, res, next) => {
+  try {
+    const pending = await Models.FriendRequest.findAll({
+      where: {
+        requesteeId: req.user.id,
+      },
+      include: [
+        {
+          model: Models.User,
+          as: 'requesterUser',
+          foreignKey: 'requesterId',
+          attributes: {
+            exclude: ['password'],
+          },
+          where: {},
+        },
+        {
+          model: Models.User,
+          as: 'requesteeUser',
+          foreignKey: 'requesteeId',
+          attributes: {
+            exclude: ['password'],
+          },
+          where: {},
+        },
+      ],
+    })
+
+    console.log(pending)
+    res.json(pending)
+  } catch (error) {
+    console.log(error)
+    next(new HttpException(400, 'Invalid data'))
+  }
+})
+
+router.post('/sent', async (req, res, next) => {
+  try {
+    const sent = await Models.FriendRequest.findAll({
+      where: {
+        requesterId: req.user.id,
+      },
+      include: [
+        {
+          model: Models.User,
+          as: 'requesterUser',
+          foreignKey: 'requesterId',
+          attributes: {
+            exclude: ['password'],
+          },
+          where: {},
+        },
+        {
+          model: Models.User,
+          as: 'requesteeUser',
+          foreignKey: 'requesteeId',
+          attributes: {
+            exclude: ['password'],
+          },
+          where: {},
+        },
+      ],
+    })
+
+    res.json(sent)
+  } catch (error) {
+    next(new HttpException(400, 'Invalid data'))
+  }
+})
+
 export { router as friendRequestRouter }

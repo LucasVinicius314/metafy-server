@@ -17,7 +17,7 @@ router.post('/profile', async (req, res, next) => {
 
     res.json(user)
   } catch (error) {
-    next(new HttpException(400, 'Invalid login data'))
+    next(new HttpException(400, 'Invalid data'))
   }
 })
 

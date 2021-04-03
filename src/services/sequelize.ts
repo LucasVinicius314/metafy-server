@@ -41,9 +41,15 @@ User.hasMany(Post, { foreignKey: 'userId' })
 Post.belongsTo(User, { foreignKey: 'userId' })
 
 User.hasMany(FriendRequest, { foreignKey: 'requesterId' })
-FriendRequest.belongsTo(User, { foreignKey: 'requesterId' })
+FriendRequest.belongsTo(User, {
+  foreignKey: 'requesterId',
+  as: 'requesterUser',
+})
 User.hasMany(FriendRequest, { foreignKey: 'requesteeId' })
-FriendRequest.belongsTo(User, { foreignKey: 'requesteeId' })
+FriendRequest.belongsTo(User, {
+  foreignKey: 'requesteeId',
+  as: 'requesteeUser',
+})
 
 const Models = { User, Post, FriendRequest }
 

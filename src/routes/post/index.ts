@@ -20,7 +20,7 @@ router.post('/all', async (req, res, next) => {
 
     res.json(posts)
   } catch (error) {
-    next(new HttpException(400, 'Invalid login data'))
+    next(new HttpException(400, 'Invalid data'))
   }
 })
 
