@@ -57,32 +57,40 @@ const router = Router()
 //   }
 // })
 
-// router.post('/reject', async (req, res, next) => {
-//   const id = req.body.id
+router.post('/remove', async (req, res, next) => {
+  const id = req.body.id
 
-//   try {
-//   } catch (error) {
-//     return void next(new HttpException(400, error))
-//   }
+  try {
+  } catch (error) {
+    return void next(new HttpException(400, error))
+  }
 
-//   try {
-//     await Models.FriendRequest.destroy({
-//       where: {
-//         [Op.and]: {
-//           requesteeId: req.user.id,
-//           id: id,
-//         },
-//       },
-//     })
+  try {
+    await Models.Friend.destroy({
+      where: {
+        [Op.or]: [
+          {
+            [Op.and]: {
+              id: id,
+              user1Id: req.user.id,
+            },
+            [Op.and]: {
+              id: id,
+              user2Id: req.user.id,
+            },
+          },
+        ],
+      },
+    })
 
-//     res.json({
-//       message: 'Request rejected',
-//     })
-//   } catch (error) {
-//     console.log(error)
-//     next(new HttpException(400, 'Invalid data'))
-//   }
-// })
+    res.json({
+      message: 'Friend removed',
+    })
+  } catch (error) {
+    console.log(error)
+    next(new HttpException(400, 'Invalid data'))
+  }
+})
 
 // router.post('/accept', async (req, res, next) => {
 //   const id = req.body.id
