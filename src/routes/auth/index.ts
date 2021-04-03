@@ -1,9 +1,8 @@
 import { Model, Op } from 'sequelize'
-import { Models, sequelize } from '../../services/sequelize'
 
 import { HttpException } from '../../exceptions/httpexception'
+import { Models } from '../../services/sequelize'
 import { Router } from 'express'
-import { Success } from '../../responses/success'
 import { Models as _Models } from '../../typescript'
 import { matches } from '../../utils/validation'
 import { sign } from '../../middleware/jwt'
@@ -16,6 +15,9 @@ router.post('/login', async (req, res, next) => {
 
   try {
     const user = await Models.User.findOne({
+      attributes: {
+        exclude: ['password'],
+      },
       where: {
         [Op.and]: {
           email: email,
@@ -27,13 +29,7 @@ router.post('/login', async (req, res, next) => {
     if (user) {
       res.setHeader('authorization', sign(user.get()))
 
-      res.json({
-        createdAt: user.getDataValue('createdAt'),
-        email: user.getDataValue('email'),
-        id: user.getDataValue('id'),
-        updatedAt: user.getDataValue('updatedAt'),
-        username: user.getDataValue('username'),
-      })
+      res.json(user)
     } else {
       next(new HttpException(400, 'User not found'))
     }
@@ -57,21 +53,16 @@ router.post('/register', async (req, res, next) => {
 
   try {
     const user = await Models.User.create<Model<_Models.User, {}>>({
-      email,
-      password,
-      username,
+      email: email,
+      password: password,
+      username: username,
     })
 
     res.setHeader('authorization', sign(user.get()))
 
-    res.json({
-      createdAt: user.getDataValue('createdAt'),
-      email: user.getDataValue('email'),
-      id: user.getDataValue('id'),
-      updatedAt: user.getDataValue('updatedAt'),
-      username: user.getDataValue('username'),
-    })
+    res.json(user)
   } catch (error) {
+    console.log(error)
     next(new HttpException(400, 'Invalid data'))
   }
 })
