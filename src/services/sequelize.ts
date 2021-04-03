@@ -31,14 +31,23 @@ const FriendRequest = sequelize.define('friendrequest', {
   requesteeId: DataTypes.INTEGER,
 })
 
+const Friend = sequelize.define('friend', {
+  user1Id: DataTypes.INTEGER,
+  user2Id: DataTypes.INTEGER,
+})
+
 User.prototype.toJSON = function () {
   let values = Object.assign({}, this.get())
   delete values.password
   return values
 }
 
+// User -> post
+
 User.hasMany(Post, { foreignKey: 'userId' })
 Post.belongsTo(User, { foreignKey: 'userId' })
+
+// User -> FriendRequest
 
 User.hasMany(FriendRequest, { foreignKey: 'requesterId' })
 FriendRequest.belongsTo(User, {
@@ -50,6 +59,13 @@ FriendRequest.belongsTo(User, {
   foreignKey: 'requesteeId',
   as: 'requesteeUser',
 })
+
+// User -> Friend
+
+User.hasMany(Friend, { foreignKey: 'user1Id' })
+Friend.belongsTo(User, { foreignKey: 'user1Id', as: 'user1' })
+User.hasMany(Friend, { foreignKey: 'user2Id' })
+Friend.belongsTo(User, { foreignKey: 'user2Id', as: 'user2' })
 
 const Models = { User, Post, FriendRequest }
 

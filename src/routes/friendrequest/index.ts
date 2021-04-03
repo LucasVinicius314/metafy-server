@@ -1,5 +1,6 @@
+import { Model, Op } from 'sequelize'
+
 import { HttpException } from '../../exceptions/httpexception'
-import { Model } from 'sequelize/types'
 import { Models } from '../../services/sequelize'
 import { Router } from 'express'
 import { Models as _Models } from '../../typescript'
@@ -29,6 +30,60 @@ router.post('/send', async (req, res, next) => {
   }
 })
 
+router.post('/cancel', async (req, res, next) => {
+  const id = req.body.id
+
+  try {
+  } catch (error) {
+    return void next(new HttpException(400, error))
+  }
+
+  try {
+    await Models.FriendRequest.destroy({
+      where: {
+        [Op.and]: {
+          requesterId: req.user.id,
+          id: id,
+        },
+      },
+    })
+
+    res.json({
+      message: 'Request cancelled',
+    })
+  } catch (error) {
+    console.log(error)
+    next(new HttpException(400, 'Invalid data'))
+  }
+})
+
+router.post('/reject', async (req, res, next) => {
+  const id = req.body.id
+
+  try {
+  } catch (error) {
+    return void next(new HttpException(400, error))
+  }
+
+  try {
+    await Models.FriendRequest.destroy({
+      where: {
+        [Op.and]: {
+          requesteeId: req.user.id,
+          id: id,
+        },
+      },
+    })
+
+    res.json({
+      message: 'Request rejected',
+    })
+  } catch (error) {
+    console.log(error)
+    next(new HttpException(400, 'Invalid data'))
+  }
+})
+
 router.post('/pending', async (req, res, next) => {
   try {
     const pending = await Models.FriendRequest.findAll({
@@ -43,7 +98,6 @@ router.post('/pending', async (req, res, next) => {
           attributes: {
             exclude: ['password'],
           },
-          where: {},
         },
         {
           model: Models.User,
@@ -52,12 +106,10 @@ router.post('/pending', async (req, res, next) => {
           attributes: {
             exclude: ['password'],
           },
-          where: {},
         },
       ],
     })
 
-    console.log(pending)
     res.json(pending)
   } catch (error) {
     console.log(error)
@@ -79,7 +131,6 @@ router.post('/sent', async (req, res, next) => {
           attributes: {
             exclude: ['password'],
           },
-          where: {},
         },
         {
           model: Models.User,
@@ -88,7 +139,6 @@ router.post('/sent', async (req, res, next) => {
           attributes: {
             exclude: ['password'],
           },
-          where: {},
         },
       ],
     })
