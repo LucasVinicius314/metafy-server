@@ -22,4 +22,11 @@ export namespace Models {
     updatedAt: Date
     createdAt: Date
   }
+  export type FriendRequest = {
+    id: number
+    requesterId: number
+    requesteeId: number
+    updatedAt: Date
+    createdAt: Date
+  }
 }
