@@ -67,6 +67,6 @@ Friend.belongsTo(User, { foreignKey: 'user1Id', as: 'user1' })
 User.hasMany(Friend, { foreignKey: 'user2Id' })
 Friend.belongsTo(User, { foreignKey: 'user2Id', as: 'user2' })
 
-const Models = { User, Post, FriendRequest }
+const Models = { User, Post, FriendRequest, Friend }
 
 export { sequelize, Models }

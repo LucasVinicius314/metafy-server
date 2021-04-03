@@ -29,4 +29,11 @@ export namespace Models {
     updatedAt: Date
     createdAt: Date
   }
+  export type Friend = {
+    id: number
+    user1Id: number
+    user2Id: number
+    updatedAt: Date
+    createdAt: Date
+  }
 }

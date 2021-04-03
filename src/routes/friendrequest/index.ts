@@ -84,6 +84,66 @@ router.post('/reject', async (req, res, next) => {
   }
 })
 
+router.post('/accept', async (req, res, next) => {
+  const id = req.body.id
+
+  try {
+  } catch (error) {
+    return void next(new HttpException(400, error))
+  }
+
+  try {
+    const request = await Models.FriendRequest.findOne<
+      Model<
+        _Models.FriendRequest & {
+          requesterUser: Omit<_Models.User, 'password'>
+          requesteeUser: Omit<_Models.User, 'password'>
+        },
+        {}
+      >
+    >({
+      where: {
+        [Op.and]: {
+          requesteeId: req.user.id,
+          id: id,
+        },
+      },
+      include: [
+        {
+          model: Models.User,
+          as: 'requesterUser',
+          foreignKey: 'requesterId',
+          attributes: {
+            exclude: ['password'],
+          },
+        },
+        {
+          model: Models.User,
+          as: 'requesteeUser',
+          foreignKey: 'requesteeId',
+          attributes: {
+            exclude: ['password'],
+          },
+        },
+      ],
+    })
+
+    await Models.Friend.create<Model<_Models.Friend, {}>>({
+      user1Id: request.getDataValue('requesterId'),
+      user2Id: request.getDataValue('requesteeId'),
+    })
+
+    await request.destroy()
+
+    res.json({
+      message: 'Request accepted',
+    })
+  } catch (error) {
+    console.log(error)
+    next(new HttpException(400, 'Invalid data'))
+  }
+})
+
 router.post('/pending', async (req, res, next) => {
   try {
     const pending = await Models.FriendRequest.findAll({
