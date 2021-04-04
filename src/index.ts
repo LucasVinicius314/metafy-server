@@ -1,6 +1,7 @@
 import * as cors from 'cors'
 import * as dotenv from 'dotenv'
 import * as express from 'express'
+import * as fileUpload from 'express-fileupload'
 
 import { Models, sequelize } from './services/sequelize'
 
@@ -24,6 +25,8 @@ const setup = async () => {
 
   app.use(cors())
   app.use(json())
+  app.use(express.static('public'))
+  app.use(fileUpload({ debug: true, createParentPath: true }))
   app.use('/api/', router)
 
   app.listen(process.env.PORT, () => {

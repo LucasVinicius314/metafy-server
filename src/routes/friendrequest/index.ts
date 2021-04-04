@@ -114,7 +114,7 @@ friendRequestRouter.post('/accept', async (req, res, next) => {
           as: 'requesterUser',
           foreignKey: 'requesterId',
           attributes: {
-            exclude: ['password'],
+            exclude: ['password', 'email'],
           },
         },
         {
@@ -122,7 +122,7 @@ friendRequestRouter.post('/accept', async (req, res, next) => {
           as: 'requesteeUser',
           foreignKey: 'requesteeId',
           attributes: {
-            exclude: ['password'],
+            exclude: ['password', 'email'],
           },
         },
       ],
@@ -156,7 +156,7 @@ friendRequestRouter.post('/pending', async (req, res, next) => {
           as: 'requesterUser',
           foreignKey: 'requesterId',
           attributes: {
-            exclude: ['password'],
+            exclude: ['password', 'email'],
           },
         },
         {
@@ -164,7 +164,7 @@ friendRequestRouter.post('/pending', async (req, res, next) => {
           as: 'requesteeUser',
           foreignKey: 'requesteeId',
           attributes: {
-            exclude: ['password'],
+            exclude: ['password', 'email'],
           },
         },
       ],
@@ -189,7 +189,7 @@ friendRequestRouter.post('/sent', async (req, res, next) => {
           as: 'requesterUser',
           foreignKey: 'requesterId',
           attributes: {
-            exclude: ['password'],
+            exclude: ['password', 'email'],
           },
         },
         {
@@ -197,7 +197,7 @@ friendRequestRouter.post('/sent', async (req, res, next) => {
           as: 'requesteeUser',
           foreignKey: 'requesteeId',
           attributes: {
-            exclude: ['password'],
+            exclude: ['password', 'email'],
           },
         },
       ],

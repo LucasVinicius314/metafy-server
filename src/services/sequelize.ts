@@ -16,8 +16,10 @@ export const sequelize = new Sequelize(`mysql://${host}:${port}/${db}`, {
 })
 
 const User = sequelize.define('user', {
+  coverPicture: DataTypes.STRING,
   email: DataTypes.STRING,
   password: DataTypes.STRING(256),
+  profilePicture: DataTypes.STRING,
   username: DataTypes.STRING,
 })
 

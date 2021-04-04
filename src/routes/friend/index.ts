@@ -167,7 +167,7 @@ friendRouter.post('/all', async (req, res, next) => {
           as: 'user1',
           foreignKey: 'user1Id',
           attributes: {
-            exclude: ['password'],
+            exclude: ['password', 'email'],
           },
         },
         {
@@ -175,7 +175,7 @@ friendRouter.post('/all', async (req, res, next) => {
           as: 'user2',
           foreignKey: 'user2Id',
           attributes: {
-            exclude: ['password'],
+            exclude: ['password', 'email'],
           },
         },
       ],

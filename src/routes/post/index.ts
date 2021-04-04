@@ -13,7 +13,7 @@ postRouter.post('/all', async (req, res, next) => {
       include: {
         model: Models.User,
         attributes: {
-          exclude: ['password'],
+          exclude: ['password', 'email'],
         },
       },
     })

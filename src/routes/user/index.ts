@@ -10,7 +10,9 @@ userRouter.post('/profile', async (req, res, next) => {
 
   try {
     const user = await Models.User.findOne({
-      attributes: ['createdAt', 'updatedAt', 'id', 'username'],
+      attributes: {
+        exclude: ['password', 'email'],
+      },
       where: {
         id: id,
       },
@@ -26,7 +28,7 @@ userRouter.post('/validate', async (req, res, next) => {
   try {
     const user = await Models.User.findOne({
       attributes: {
-        exclude: ['password'],
+        exclude: ['password', 'email'],
       },
       where: {
         id: req.user.id,
