@@ -1,7 +1,7 @@
 import { ErrorRequestHandler } from 'express'
 import { HttpException } from '../exceptions/httpexception'
 
-const errorHandler: ErrorRequestHandler = (
+export const errorHandler: ErrorRequestHandler = (
   error: HttpException,
   req,
   res,
@@ -11,5 +11,3 @@ const errorHandler: ErrorRequestHandler = (
     message: error.message,
   })
 }
-
-export { errorHandler }

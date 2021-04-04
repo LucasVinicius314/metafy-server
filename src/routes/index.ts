@@ -7,7 +7,7 @@ import { postRouter } from './post'
 import { userRouter } from './user'
 import { validationHandler } from '../middleware/jwt'
 
-const router = Router()
+export const router = Router()
 
 // open routes
 
@@ -25,5 +25,3 @@ router.use('/user', userRouter)
 router.use('/post', postRouter)
 router.use('/friendrequest', friendRequestRouter)
 router.use('/friend', friendRouter)
-
-export { router }

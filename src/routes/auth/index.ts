@@ -5,11 +5,12 @@ import { Models } from '../../services/sequelize'
 import { Router } from 'express'
 import { Models as _Models } from '../../typescript'
 import { matches } from '../../utils/validation'
+import { sha256 } from '../../utils/crypto'
 import { sign } from '../../middleware/jwt'
 
-const router = Router()
+export const authRouter = Router()
 
-router.post('/login', async (req, res, next) => {
+authRouter.post('/login', async (req, res, next) => {
   const email = req.body.email
   const password = req.body.password
 
@@ -21,7 +22,7 @@ router.post('/login', async (req, res, next) => {
       where: {
         [Op.and]: {
           email: email,
-          password: password,
+          password: sha256(password),
         },
       },
     })
@@ -38,7 +39,7 @@ router.post('/login', async (req, res, next) => {
   }
 })
 
-router.post('/register', async (req, res, next) => {
+authRouter.post('/register', async (req, res, next) => {
   const email = req.body.email
   const password = req.body.password
   const username = req.body.username
@@ -54,7 +55,7 @@ router.post('/register', async (req, res, next) => {
   try {
     const user = await Models.User.create<Model<_Models.User, {}>>({
       email: email,
-      password: password,
+      password: sha256(password),
       username: username,
     })
 
@@ -66,5 +67,3 @@ router.post('/register', async (req, res, next) => {
     next(new HttpException(400, 'Invalid data'))
   }
 })
-
-export { router as authRouter }

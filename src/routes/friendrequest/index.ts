@@ -5,9 +5,9 @@ import { Models } from '../../services/sequelize'
 import { Router } from 'express'
 import { Models as _Models } from '../../typescript'
 
-const router = Router()
+export const friendRequestRouter = Router()
 
-router.post('/send', async (req, res, next) => {
+friendRequestRouter.post('/send', async (req, res, next) => {
   const requesteeId = req.body.requesteeId
 
   try {
@@ -30,7 +30,7 @@ router.post('/send', async (req, res, next) => {
   }
 })
 
-router.post('/cancel', async (req, res, next) => {
+friendRequestRouter.post('/cancel', async (req, res, next) => {
   const id = req.body.id
 
   try {
@@ -57,7 +57,7 @@ router.post('/cancel', async (req, res, next) => {
   }
 })
 
-router.post('/reject', async (req, res, next) => {
+friendRequestRouter.post('/reject', async (req, res, next) => {
   const id = req.body.id
 
   try {
@@ -84,7 +84,7 @@ router.post('/reject', async (req, res, next) => {
   }
 })
 
-router.post('/accept', async (req, res, next) => {
+friendRequestRouter.post('/accept', async (req, res, next) => {
   const id = req.body.id
 
   try {
@@ -144,7 +144,7 @@ router.post('/accept', async (req, res, next) => {
   }
 })
 
-router.post('/pending', async (req, res, next) => {
+friendRequestRouter.post('/pending', async (req, res, next) => {
   try {
     const pending = await Models.FriendRequest.findAll({
       where: {
@@ -177,7 +177,7 @@ router.post('/pending', async (req, res, next) => {
   }
 })
 
-router.post('/sent', async (req, res, next) => {
+friendRequestRouter.post('/sent', async (req, res, next) => {
   try {
     const sent = await Models.FriendRequest.findAll({
       where: {
@@ -208,5 +208,3 @@ router.post('/sent', async (req, res, next) => {
     next(new HttpException(400, 'Invalid data'))
   }
 })
-
-export { router as friendRequestRouter }

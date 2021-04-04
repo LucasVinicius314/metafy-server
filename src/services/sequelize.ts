@@ -10,14 +10,14 @@ const db = process.env.MYSQL_DB
 const user = process.env.MYSQL_USER
 const password = process.env.MYSQL_PASSWORD
 
-const sequelize = new Sequelize(`mysql://${host}:${port}/${db}`, {
+export const sequelize = new Sequelize(`mysql://${host}:${port}/${db}`, {
   username: user,
   password: password,
 })
 
 const User = sequelize.define('user', {
   email: DataTypes.STRING,
-  password: DataTypes.STRING,
+  password: DataTypes.STRING(256),
   username: DataTypes.STRING,
 })
 
@@ -67,6 +67,4 @@ Friend.belongsTo(User, { foreignKey: 'user1Id', as: 'user1' })
 User.hasMany(Friend, { foreignKey: 'user2Id' })
 Friend.belongsTo(User, { foreignKey: 'user2Id', as: 'user2' })
 
-const Models = { User, Post, FriendRequest, Friend }
-
-export { sequelize, Models }
+export const Models = { User, Post, FriendRequest, Friend }

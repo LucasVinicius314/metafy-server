@@ -2,9 +2,9 @@ import { HttpException } from '../../exceptions/httpexception'
 import { Models } from '../../services/sequelize'
 import { Router } from 'express'
 
-const router = Router()
+export const userRouter = Router()
 
-router.post('/profile', async (req, res, next) => {
+userRouter.post('/profile', async (req, res, next) => {
   const id = req.body.id
 
   try {
@@ -20,5 +20,3 @@ router.post('/profile', async (req, res, next) => {
     next(new HttpException(400, 'Invalid data'))
   }
 })
-
-export { router as userRouter }

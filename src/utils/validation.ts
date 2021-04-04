@@ -13,7 +13,7 @@ type Options = {
 
 type Types = 'string' | 'number'
 
-const matches: Matches = (value, type, message, options) => {
+export const matches: Matches = (value, type, message, options) => {
   options = options || {}
   options.email = options.email || false
   options.maxLength = options.maxLength || 20
@@ -34,5 +34,3 @@ const matches: Matches = (value, type, message, options) => {
     throw message
   }
 }
-
-export { matches }

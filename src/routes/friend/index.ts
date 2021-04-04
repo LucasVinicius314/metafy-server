@@ -5,7 +5,7 @@ import { Models } from '../../services/sequelize'
 import { Router } from 'express'
 import { Models as _Models } from '../../typescript'
 
-const router = Router()
+export const friendRouter = Router()
 
 // router.post('/send', async (req, res, next) => {
 //   const requesteeId = req.body.requesteeId
@@ -57,7 +57,7 @@ const router = Router()
 //   }
 // })
 
-router.post('/remove', async (req, res, next) => {
+friendRouter.post('/remove', async (req, res, next) => {
   const id = req.body.id
 
   try {
@@ -152,7 +152,7 @@ router.post('/remove', async (req, res, next) => {
 //   }
 // })
 
-router.post('/all', async (req, res, next) => {
+friendRouter.post('/all', async (req, res, next) => {
   try {
     const friends = await Models.Friend.findAll({
       where: {
@@ -238,5 +238,3 @@ router.post('/all', async (req, res, next) => {
 //     next(new HttpException(400, 'Invalid data'))
 //   }
 // })
-
-export { router as friendRouter }

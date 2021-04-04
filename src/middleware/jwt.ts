@@ -7,7 +7,7 @@ import { RequestHandler } from 'express'
 
 dotenv.config()
 
-const validationHandler: RequestHandler = (req, res, next) => {
+export const validationHandler: RequestHandler = (req, res, next) => {
   try {
     const token = req.headers.authorization
     const decoded = jwt.verify(token, process.env.SECRET) as Models.User
@@ -18,8 +18,6 @@ const validationHandler: RequestHandler = (req, res, next) => {
   }
 }
 
-const sign = (user: Models.User) => {
+export const sign = (user: Models.User) => {
   return jwt.sign(user, process.env.SECRET)
 }
-
-export { validationHandler, sign }

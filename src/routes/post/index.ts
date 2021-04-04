@@ -5,9 +5,9 @@ import { Router } from 'express'
 import { Models as _Models } from '../../typescript'
 import { matches } from '../../utils/validation'
 
-const router = Router()
+export const postRouter = Router()
 
-router.post('/all', async (req, res, next) => {
+postRouter.post('/all', async (req, res, next) => {
   try {
     const posts = await Models.Post.findAll({
       include: {
@@ -24,7 +24,7 @@ router.post('/all', async (req, res, next) => {
   }
 })
 
-router.post('/create', async (req, res, next) => {
+postRouter.post('/create', async (req, res, next) => {
   const content = req.body.content
 
   try {
@@ -46,5 +46,3 @@ router.post('/create', async (req, res, next) => {
     next(new HttpException(400, 'Invalid data'))
   }
 })
-
-export { router as postRouter }
