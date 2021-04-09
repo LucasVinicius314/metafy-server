@@ -29,13 +29,18 @@ const Post = sequelize.define('post', {
 })
 
 const FriendRequest = sequelize.define('friendrequest', {
-  requesterId: DataTypes.INTEGER,
   requesteeId: DataTypes.INTEGER,
+  requesterId: DataTypes.INTEGER,
 })
 
 const Friend = sequelize.define('friend', {
   user1Id: DataTypes.INTEGER,
   user2Id: DataTypes.INTEGER,
+})
+
+const Like = sequelize.define('like', {
+  postId: DataTypes.INTEGER,
+  userId: DataTypes.INTEGER,
 })
 
 User.prototype.toJSON = function () {
@@ -69,4 +74,14 @@ Friend.belongsTo(User, { foreignKey: 'user1Id', as: 'user1' })
 User.hasMany(Friend, { foreignKey: 'user2Id' })
 Friend.belongsTo(User, { foreignKey: 'user2Id', as: 'user2' })
 
-export const Models = { User, Post, FriendRequest, Friend }
+// Post -> Like
+
+Post.hasMany(Like, { foreignKey: 'postId' })
+Like.belongsTo(Post, { foreignKey: 'postId' })
+
+// User -> Like
+
+User.hasMany(Like, { foreignKey: 'userId' })
+Like.belongsTo(User, { foreignKey: 'userId' })
+
+export const Models = { User, Post, FriendRequest, Friend, Like }

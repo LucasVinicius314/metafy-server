@@ -36,4 +36,11 @@ export namespace Models {
     updatedAt: Date
     createdAt: Date
   }
+  export type Like = {
+    id: number
+    userId: number
+    postId: number
+    updatedAt: Date
+    createdAt: Date
+  }
 }
