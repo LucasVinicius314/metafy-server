@@ -12,6 +12,7 @@ postRouter.post('/all', async (req, res, next) => {
   try {
     const posts = await Models.Post.findAll({
       group: 'id',
+      order: [['createdAt', 'DESC']],
       include: [
         {
           model: Models.User,
@@ -22,10 +23,15 @@ postRouter.post('/all', async (req, res, next) => {
         {
           model: Models.Like,
         },
+        {
+          model: Models.Comment,
+          attributes: [],
+        },
       ],
       attributes: {
         include: [
           [fn('COUNT', col('likes.id')), 'likeCount'],
+          [fn('COUNT', col('comments.id')), 'commentCount'],
           [
             literal(
               `(select count(*) from likes lk where lk.postId = post.id and lk.userId = ${req.user.id})`

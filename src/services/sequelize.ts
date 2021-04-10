@@ -43,6 +43,12 @@ const Like = sequelize.define('like', {
   userId: DataTypes.INTEGER,
 })
 
+const Comment = sequelize.define('comment', {
+  content: DataTypes.STRING,
+  postId: DataTypes.INTEGER,
+  userId: DataTypes.INTEGER,
+})
+
 User.prototype.toJSON = function () {
   let values = Object.assign({}, this.get())
   delete values.password
@@ -84,4 +90,14 @@ Like.belongsTo(Post, { foreignKey: 'postId' })
 User.hasMany(Like, { foreignKey: 'userId' })
 Like.belongsTo(User, { foreignKey: 'userId' })
 
-export const Models = { User, Post, FriendRequest, Friend, Like }
+// Post -> Comment
+
+Post.hasMany(Comment, { foreignKey: 'postId' })
+Comment.belongsTo(Post, { foreignKey: 'postId' })
+
+// User -> Comment
+
+User.hasMany(Comment, { foreignKey: 'userId' })
+Comment.belongsTo(User, { foreignKey: 'userId' })
+
+export const Models = { User, Post, FriendRequest, Friend, Like, Comment }
