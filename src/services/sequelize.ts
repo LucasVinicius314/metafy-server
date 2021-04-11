@@ -49,6 +49,17 @@ const Comment = sequelize.define('comment', {
   userId: DataTypes.INTEGER,
 })
 
+const Chat = sequelize.define('chat', {
+  user1Id: DataTypes.INTEGER,
+  user2Id: DataTypes.INTEGER,
+})
+
+const Message = sequelize.define('message', {
+  chatId: DataTypes.INTEGER,
+  content: DataTypes.STRING,
+  userId: DataTypes.INTEGER,
+})
+
 User.prototype.toJSON = function () {
   let values = Object.assign({}, this.get())
   delete values.password
@@ -100,4 +111,30 @@ Comment.belongsTo(Post, { foreignKey: 'postId' })
 User.hasMany(Comment, { foreignKey: 'userId' })
 Comment.belongsTo(User, { foreignKey: 'userId' })
 
-export const Models = { User, Post, FriendRequest, Friend, Like, Comment }
+// User -> Chat
+
+User.hasMany(Chat, { foreignKey: 'user1Id' })
+Chat.belongsTo(User, { foreignKey: 'user1Id', as: 'user1' })
+User.hasMany(Chat, { foreignKey: 'user2Id' })
+Chat.belongsTo(User, { foreignKey: 'user2Id', as: 'user2' })
+
+// Chat -> Message
+
+Chat.hasMany(Message, { foreignKey: 'chatId' })
+Message.belongsTo(Chat, { foreignKey: 'chatId' })
+
+// User -> Message
+
+User.hasMany(Message, { foreignKey: 'userId' })
+Message.belongsTo(User, { foreignKey: 'userId' })
+
+export const Models = {
+  User,
+  Post,
+  FriendRequest,
+  Friend,
+  Like,
+  Comment,
+  Chat,
+  Message,
+}

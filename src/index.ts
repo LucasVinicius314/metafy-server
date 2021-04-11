@@ -2,11 +2,13 @@ import * as cors from 'cors'
 import * as dotenv from 'dotenv'
 import * as express from 'express'
 import * as fileUpload from 'express-fileupload'
+import * as http from 'http'
 
 import { Models, sequelize } from './services/sequelize'
 
 import { json } from 'body-parser'
 import { router } from './routes'
+import { useSocket } from './services/socket'
 
 dotenv.config()
 
@@ -17,7 +19,7 @@ const setup = async () => {
     .catch(console.log)
 
   await sequelize
-    .sync({ alter: true, force: false })
+    .sync({ alter: true, force: false, logging: false })
     .then(() => console.log('Database sync ok'))
     .catch(console.log)
 
@@ -29,7 +31,11 @@ const setup = async () => {
   app.use(fileUpload({ debug: true, createParentPath: true }))
   app.use('/api/', router)
 
-  app.listen(process.env.PORT, () => {
+  const server = http.createServer(app)
+
+  useSocket(server)
+
+  server.listen(process.env.PORT, () => {
     console.log(`Listening on port ${process.env.PORT}`)
   })
 }
