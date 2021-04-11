@@ -1,5 +1,6 @@
 import { Router } from 'express'
 import { authRouter } from './auth'
+import { chatRouter } from './chat'
 import { commentRouter } from './comment'
 import { errorHandler } from '../middleware/error'
 import { friendRequestRouter } from './friendrequest'
@@ -25,6 +26,7 @@ router.use('/friendrequest', friendRequestRouter)
 router.use('/friend', friendRouter)
 router.use('/picture', pictureRouter)
 router.use('/comment', commentRouter)
+router.use('/chat', chatRouter)
 
 // error
 
