@@ -31,16 +31,22 @@ chatRouter.post('/all', async (req, res, next) => {
             exclude: ['password', 'email'],
           },
         },
+        {
+          model: Models.Message,
+          // foreignKey: 'chatId',
+        },
       ],
     })
 
     const _chats: (_Models.Chat & {
       user: Omit<_Models.User, 'password'>
+      messages: _Models.Message[]
     })[] = chats
       .map((chat) => {
         return chat.get() as _Models.Chat & {
           user1: Omit<_Models.User, 'password'>
           user2: Omit<_Models.User, 'password'>
+          messages: _Models.Message[]
         }
       })
       .map((chat) => ({
@@ -50,6 +56,7 @@ chatRouter.post('/all', async (req, res, next) => {
         user: chat.user1Id === req.user.id ? chat.user2 : chat.user1,
         user1Id: chat.user1Id,
         user2Id: chat.user2Id,
+        messages: chat.messages,
       }))
 
     res.json(_chats)

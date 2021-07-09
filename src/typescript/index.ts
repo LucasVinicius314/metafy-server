@@ -50,4 +50,12 @@ export namespace Models {
     updatedAt: Date
     createdAt: Date
   }
+  export type Message = {
+    id: number
+    content: string
+    chatId: number
+    userId: number
+    updatedAt: Date
+    createdAt: Date
+  }
 }

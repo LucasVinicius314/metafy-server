@@ -5,6 +5,7 @@ import { commentRouter } from './comment'
 import { errorHandler } from '../middleware/error'
 import { friendRequestRouter } from './friendrequest'
 import { friendRouter } from './friend'
+import { messageRouter } from './message'
 import { pictureRouter } from './picture'
 import { postRouter } from './post'
 import { userRouter } from './user'
@@ -27,6 +28,7 @@ router.use('/friend', friendRouter)
 router.use('/picture', pictureRouter)
 router.use('/comment', commentRouter)
 router.use('/chat', chatRouter)
+router.use('/message', messageRouter)
 
 // error
 
