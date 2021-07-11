@@ -16,10 +16,18 @@ export const sequelize = new Sequelize(`mysql://${host}:${port}/${db}`, {
 })
 
 const User = sequelize.define('user', {
-  coverPicture: DataTypes.STRING,
+  coverPicture: {
+    type: DataTypes.STRING,
+    defaultValue: 'default-cover',
+    allowNull: false,
+  },
   email: DataTypes.STRING,
   password: DataTypes.STRING(256),
-  profilePicture: DataTypes.STRING,
+  profilePicture: {
+    type: DataTypes.STRING,
+    defaultValue: 'default-user',
+    allowNull: false,
+  },
   username: DataTypes.STRING,
 })
 
