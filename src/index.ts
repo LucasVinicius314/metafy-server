@@ -28,7 +28,6 @@ const setup = async () => {
   app.use(cors())
   app.use(json())
   app.use(urlencoded({ extended: true }))
-  // app.use(express.static('public'))
   app.use(fileUpload({ debug: true, createParentPath: true }))
   app.use('/api/', router)
 
