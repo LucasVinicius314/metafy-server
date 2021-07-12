@@ -32,12 +32,18 @@ pictureRouter.post('/upload', async (req, res, next) => {
       throw 'Invalid scope'
     }
 
-    await uploadFile({ body: file, key: name })
+    await uploadFile({
+      body: file.data,
+      key: name,
+      id: req.user.id.toString(),
+      scope: scope,
+    })
 
     res.json({
       message: 'Picture uploaded',
     })
   } catch (error) {
+    console.log(error)
     next(new HttpException(400, 'Invalid data'))
   }
 })
