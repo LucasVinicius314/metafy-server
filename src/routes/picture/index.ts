@@ -3,6 +3,7 @@ import * as uniqId from 'uniqid'
 import { HttpException } from '../../exceptions/httpexception'
 import { Models } from '../../services/sequelize'
 import { Router } from 'express'
+import { sha256Safe } from '../../utils/crypto'
 import { uploadFile } from '../../utils/s3'
 
 export const pictureRouter = Router()
@@ -13,16 +14,18 @@ pictureRouter.post('/upload', async (req, res, next) => {
     const _file = req.files.image
     const file = Array.isArray(_file) ? _file[0] : _file
 
+    const id = req.user.id.toString()
+
     const user = await Models.User.findOne({
       attributes: {
         exclude: ['password', 'email'],
       },
       where: {
-        id: req.user.id,
+        id: id,
       },
     })
 
-    const name = uniqId()
+    const name = sha256Safe(`${scope}_${id}`)
 
     if (scope === 'profile') {
       user.update({ profilePicture: name })

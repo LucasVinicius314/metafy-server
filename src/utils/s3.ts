@@ -14,7 +14,7 @@ export const uploadFile = async ({ key, body, scope, id }: Params) => {
       Key: key,
       Body: body,
       ACL: 'public-read',
-      Metadata: { scope, id },
+      Tagging: `scope=${scope}&id=${id}`,
     })
     .promise()
 }
