@@ -1,5 +1,3 @@
-import * as uniqId from 'uniqid'
-
 import { HttpException } from '../../exceptions/httpexception'
 import { Models } from '../../services/sequelize'
 import { Router } from 'express'
