@@ -4,10 +4,10 @@ import * as express from 'express'
 import * as fileUpload from 'express-fileupload'
 import * as http from 'http'
 
-import { Models, sequelize } from './services/sequelize'
 import { json, urlencoded } from 'body-parser'
 
 import { router } from './routes'
+import { sequelize } from './services/sequelize'
 import { useSocket } from './services/socket'
 
 dotenv.config()

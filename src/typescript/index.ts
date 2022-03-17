@@ -4,15 +4,12 @@ declare global {
       user: Models.User
     }
   }
+
   namespace NodeJS {
     interface ProcessEnv {
       NODE_ENV: 'development' | 'production'
       PORT?: string
-      MYSQL_HOST: string
-      MYSQL_PORT: string
-      MYSQL_DB: string
-      MYSQL_USER: string
-      MYSQL_PASSWORD: string
+      DATABASE_URL: string
       SECRET: string
       AWS_ACCESS_KEY_ID: string
       AWS_SECRET_ACCESS_KEY: string
@@ -30,6 +27,7 @@ export namespace Models {
     updatedAt: Date
     createdAt: Date
   }
+
   export type Post = {
     id: number
     userId: number
@@ -37,6 +35,7 @@ export namespace Models {
     updatedAt: Date
     createdAt: Date
   }
+
   export type FriendRequest = {
     id: number
     requesterId: number
@@ -44,6 +43,7 @@ export namespace Models {
     updatedAt: Date
     createdAt: Date
   }
+
   export type Friend = {
     id: number
     user1Id: number
@@ -51,6 +51,7 @@ export namespace Models {
     updatedAt: Date
     createdAt: Date
   }
+
   export type Like = {
     id: number
     userId: number
@@ -58,6 +59,7 @@ export namespace Models {
     updatedAt: Date
     createdAt: Date
   }
+
   export type Chat = {
     id: number
     user1Id: number
@@ -65,6 +67,7 @@ export namespace Models {
     updatedAt: Date
     createdAt: Date
   }
+
   export type Message = {
     id: number
     content: string

@@ -16,14 +16,18 @@ const clients: Clients = {}
 
 export const useSocket = (server: Server) => {
   const io = new socketIo(server)
+
   io.on('connection', (socket) => {
     console.log('Socket client connected')
+
     const token = socket.request.headers.authorization
     const decoded = jwt.verify(token, process.env.SECRET) as Omit<
       _Models.User,
       'password'
     >
+
     clients[decoded.id] = socket
+
     useMessage(socket, decoded)
   })
 }
