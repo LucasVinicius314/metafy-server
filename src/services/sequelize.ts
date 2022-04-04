@@ -4,22 +4,23 @@ import { DataTypes, Sequelize } from 'sequelize'
 
 dotenv.config()
 
-const host = process.env.MYSQL_HOST
-const port = process.env.MYSQL_PORT
-const db = process.env.MYSQL_DB
-const user = process.env.MYSQL_USER
-const password = process.env.MYSQL_PASSWORD
+const databaseUrl = process.env.DATABASE_URL
 
-export const sequelize = new Sequelize(`mysql://${host}:${port}/${db}`, {
-  username: user,
-  password: password,
-})
+export const sequelize = new Sequelize(databaseUrl, { dialect: 'postgres' })
 
 const User = sequelize.define('user', {
-  coverPicture: DataTypes.STRING,
+  coverPicture: {
+    type: DataTypes.STRING,
+    defaultValue: 'default-cover',
+    allowNull: false,
+  },
   email: DataTypes.STRING,
   password: DataTypes.STRING(256),
-  profilePicture: DataTypes.STRING,
+  profilePicture: {
+    type: DataTypes.STRING,
+    defaultValue: 'default-user',
+    allowNull: false,
+  },
   username: DataTypes.STRING,
 })
 

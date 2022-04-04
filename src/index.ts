@@ -4,10 +4,10 @@ import * as express from 'express'
 import * as fileUpload from 'express-fileupload'
 import * as http from 'http'
 
-import { Models, sequelize } from './services/sequelize'
+import { json, urlencoded } from 'body-parser'
 
-import { json } from 'body-parser'
 import { router } from './routes'
+import { sequelize } from './services/sequelize'
 import { useSocket } from './services/socket'
 
 dotenv.config()
@@ -27,7 +27,7 @@ const setup = async () => {
 
   app.use(cors())
   app.use(json())
-  app.use(express.static('public'))
+  app.use(urlencoded({ extended: true }))
   app.use(fileUpload({ debug: true, createParentPath: true }))
   app.use('/api/', router)
 

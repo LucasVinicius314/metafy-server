@@ -44,7 +44,6 @@ postRouter.post('/all', async (req, res, next) => {
 
     res.json(posts)
   } catch (error) {
-    console.log(error)
     next(new HttpException(400, 'Invalid data'))
   }
 })
@@ -53,7 +52,10 @@ postRouter.post('/create', async (req, res, next) => {
   const content = req.body.content
 
   try {
-    matches(content, 'string', 'Invalid content')
+    matches(content, 'string', 'Invalid content', {
+      minLength: 1,
+      maxLength: 200,
+    })
   } catch (error) {
     return void next(new HttpException(400, error))
   }
